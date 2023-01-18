@@ -55,9 +55,7 @@ function game() {
         const computer = getComputerChoice();
         console.log(playRound(round, computer));
     }
-
-    console.log(win);
-    console.log(lose);
+    
     if (win > lose) {
         alert("You won the Game!")
     } else if (win < lose) {
