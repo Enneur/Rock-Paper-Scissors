@@ -1,80 +1,50 @@
-function getUserChoice() {
+let userCount = 0;
+let computerCount = 0;
+const paperButton = document.querySelector("#paper");
+const rockButton = document.querySelector("#rock");
+const scissorsButton = document.querySelector("#scissors");
+const findRounds = document.querySelector("#rounds");
+const findResult = document.querySelector("#result");
+const choice = ["rock", "paper", "scissors"];
 
-    let round = prompt("Choose Rock Paper or Scissors.");
-    if (round.toUpperCase() !== "ROCK" && round.toUpperCase() !== "PAPER" && round.toUpperCase() !== "SCISSORS") {
-        console.log("Invalid Choice! Please choose Rock, Paper or Scissors.")
-        return;
-    }
-    return round;
-}
+function PlayRound(user) {
+  let rChoice = choice [Math.floor(Math.random() * 3)];
 
+  if (user === rChoice) {
+    findResult.innerHTML = "Draw!";
+  } else if (user === "paper" && rChoice === "rock" || user === "scissors" && rChoice === "paper" || user === "rock" && rChoice=== "scissors") {
+    userCount++;
+    findResult.innerHTML = "You win!";
+  } else {
+    computerCount++;
+    findResult.innerHTML = "You lose!";
+  }
 
-function getComputerChoice() {
-
-    const choice = ["Rock", "Paper", "Scissors"];
-    let rNumber = Math.floor(Math.random() * 3);
-    return choice[rNumber];
-}
-
-
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection.toUpperCase() === "PAPER") {
-        if (computerSelection.toUpperCase() === "ROCK") {
-            return "You win! Paper beats Rock.";
-        } else if (computerSelection.toUpperCase() === "SCISSORS") {
-            return "You lose! scissors beats Paper.";
-        }
-    } else if (playerSelection.toUpperCase() === "ROCK") {
-        if (computerSelection.toUpperCase() === "SCISSORS") {
-            return "You win! Rock beats Scissors.";
-        } else if (computerSelection.toUpperCase() === "PAPER") {
-            return "You lose! Paper beats Rock.";
-        }
-
-    } else if (playerSelection.toUpperCase() === "SCISSORS") {
-        if (computerSelection.toUpperCase() === "PAPER") {
-            return "You win! Scissors beats Paper.";
-        } else if (computerSelection.toUpperCase() === "ROCK") {
-            return "You lose! Rock beats Scissors.";
-        }
-    }
-
-    if (playerSelection.toUpperCase() === computerSelection.toUpperCase()) {
-        return "Draw.";
-    }
-}
-
-
-function game() {
-
-    let userCount = 0;
-    let computerCount = 0;
-
-    for (let i = 0; i < 5; i++) {
-        const userChoice = getUserChoice();
-        let computerChoice = getComputerChoice();
-        console.log("You chose: " + userChoice);
-        console.log("The Computer chose: " + computerChoice);
-        let jajanken = playRound(userChoice, computerChoice);
-        console.log(jajanken)
-
-        if (jajanken.includes("win") ) {
-            userCount++;
-        } else if (jajanken.includes("lose")) {
-            computerCount++;
-        }
-
-        console.log("User Score: " + userCount + ", Computer Score: " + computerCount)
-    }
-
-    if (userCount > computerCount) {
-        alert ("Congratulations! You Won The Game!")
-    } else if (userCount < computerCount) {
-        alert ("You lost the game. Good Game!")
-    } else {
-        alert ("Almost. It's a Draw!")
-    }
+  if (userCount === 5) {
+    findResult.innerHTML = "You won the Game!";
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+  } else if (computerCount === 5) {
+    findResult.innerHTML = "Computer won the Game!";
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+  } 
+  findRounds.innerHTML = "Your score: " + userCount + " VS Computer score: " + computerCount;
 
 }
 
-console.log(game());
+rockButton.addEventListener('click', () => {
+   PlayRound("rock");
+});
+
+paperButton.addEventListener('click', () => {
+  PlayRound("paper");
+  });
+
+scissorsButton.addEventListener('click', () => {
+  PlayRound("scissors");
+});
+
+
